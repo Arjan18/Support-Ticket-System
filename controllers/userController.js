@@ -8,9 +8,9 @@ const ObjectID = require('mongodb').ObjectID;
 exports.create = (req, res) => {
    const approved = req.body.approved != null ? req.body.approved : false;
 
-  const department = req.body.department._id
+  // const department = req.body.department._id
   const user_type = req.body.user_type._id
-  const { title, first_name, last_name, email, password } = req.body;
+  const { title, first_name, last_name, email, password, department} = req.body;
   const user = new User({ title, first_name, last_name, email, password, department, user_type, approved });
 
   bcrypt.genSalt(10, (err, salt) => {
@@ -28,7 +28,8 @@ exports.create = (req, res) => {
               first_name: user.first_name, 
               last_name: user.last_name, 
               email: user.email, 
-              department: req.body.department,
+              department: user.department,
+              // department: req.body.department,
               user_type: req.body.user_type,
               approved: user.approved,
             }
@@ -40,7 +41,8 @@ exports.create = (req, res) => {
 };
 
 exports.get = (req, res) => {
-  User.find().populate(['department', 'user_type']).exec(function (err, data) {
+  //'department',
+  User.find().populate([ 'user_type']).exec(function (err, data) {
     if (err) {
         res.status(500).send({
             message:err.message || "Some error occurred while retrieving Users."
@@ -78,11 +80,11 @@ exports.update = (req, res) => {
   }
 
   let password = req.body.password === '' ? req.body.user.password : req.body.password;
-  const department = req.body.department._id;
+  // const department = req.body.department._id;
   const user_type = req.body.user_type._id;
   const approved = req.body.approved != null ? req.body.approved : false;
 
-  const { title, first_name, last_name, email } = req.body;
+  const { title, first_name, last_name, email, department } = req.body;
   bcrypt.genSalt(10, (err, salt) => {
     bcrypt.hash(password, salt, (err, hash) => {
       if (err) throw err;
@@ -113,7 +115,8 @@ exports.update = (req, res) => {
                 first_name: first_name, 
                 last_name: last_name, 
                 email: email, 
-                department: req.body.department,
+                department: department,
+                // department: req.body.department,
                 user_type: req.body.user_type,
                 approved: approved,
               }

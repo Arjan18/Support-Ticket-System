@@ -39,7 +39,7 @@ db.mongoose.connect(db.uri, {
 
 app.use('/', require('./routes/users'));
 app.use('/ticket', require('./routes/ticket'));
-app.use('/department', require('./routes/department'));
+// app.use('/department', require('./routes/department'));
 
 app.use(function (err, req, res, next) {
     console.error(err.message);

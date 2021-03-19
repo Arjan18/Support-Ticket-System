@@ -27,8 +27,10 @@ let userSchema = new Schema({
     required: true,
   },
   department: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Department'
+    // type: mongoose.Schema.Types.ObjectId,
+    // ref: 'Department'
+    type: String,
+    required: true,
   },
   user_type: {
     type: mongoose.Schema.Types.ObjectId,
