@@ -6,11 +6,9 @@ const bcrypt = require('bcryptjs')
 const ObjectID = require('mongodb').ObjectID;
 
 exports.create = (req, res) => {
-   const approved = req.body.approved != null ? req.body.approved : false;
-
   const user_type = req.body.user_type._id
   const { title, first_name, last_name, email, password, department} = req.body;
-  const user = new User({ title, first_name, last_name, email, password, department, user_type, approved });
+  const user = new User({ title, first_name, last_name, email, password, department, user_type,  });
 
   bcrypt.genSalt(10, (err, salt) => {
     bcrypt.hash(user.password, salt, (err, hash) => {
@@ -29,7 +27,7 @@ exports.create = (req, res) => {
               email: user.email, 
               department: user.department,
               user_type: req.body.user_type,
-              approved: user.approved,
+              
             }
           res.send(createdUser, 200);
         }
@@ -78,7 +76,6 @@ exports.update = (req, res) => {
 
   let password = req.body.password === '' ? req.body.user.password : req.body.password;
   const user_type = req.body.user_type._id;
-  const approved = req.body.approved != null ? req.body.approved : false;
 
   const { title, first_name, last_name, email, department } = req.body;
   bcrypt.genSalt(10, (err, salt) => {
@@ -97,7 +94,6 @@ exports.update = (req, res) => {
               password: password,
               department: department,
               user_type: user_type,
-              approved: approved,
             },
         },
         function(err, doc) {
@@ -113,7 +109,6 @@ exports.update = (req, res) => {
                 email: email, 
                 department: department,
                 user_type: req.body.user_type,
-                approved: approved,
               }
               res.status(200).send(updatedUser);            
           }
@@ -147,39 +142,6 @@ exports.userTypes = (req, res) => {
       message: err.message || "Some error occurred while retrieving User Types."
     });
   });
-};
-
-exports.approveUser = (req, res) => {
-  if (!req.body.approved) {
-    res.status(200).send({ errors: [{ approved: "You must approve or decline the user!" }]});
-    return;
-  }
-
-  const { approved } = req.body;
-  User.findByIdAndUpdate(
-    ObjectID(req.body.user._id), 
-    {
-        $set: { approved: approved },
-    },
-    function(err, doc) {
-      if (err) {
-          res.status(500).send("Error approving this user, try again.");
-      } else {
-          const approvedUser = 
-          {
-            _id: req.body.user._id,
-            title: req.body.user.title,
-            first_name: req.body.user.first_name, 
-            last_name: req.body.user.last_name, 
-            email: req.body.user.email, 
-            department: req.body.user.department,
-            user_type: req.body.user.user_type,
-            approved: approved,
-          }
-          res.status(200).send(approvedUser);            
-      }
-    }
-  );
 };
 
 exports.currentUser = (req, res) => {

@@ -22,10 +22,8 @@ exports.login = (req, res) => {
           Error.email = 'Incorrect email or password';
           Error.password = 'Incorrect email or password';
           res.json({Error}, 200); //401
-        } else if (!user.approved) {
-          Error.approved = 'Your account has not been approved yet, please contact a site admin';
-          res.json({Error}, 200); //401
-        } else {
+        } 
+        else {
           // Session Issue token
           const payload = { user };
           const token = jwt.sign(payload, secret, {

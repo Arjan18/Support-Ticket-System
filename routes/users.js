@@ -27,7 +27,6 @@ router.post('/api/delete-user', authenticateAdmin, UserController.delete); //Adm
 
 router.get('/api/get-current-user', currentUser, UserController.currentUser); //WithAuth
 router.get('/api/get-user-type', UserController.userTypes);
-router.post('/api/approve-user', authenticateAdmin, UserController.approveUser); // Admin Protection
 
 router.get('/checkToken', withAuth, function(req, res) {
     res.sendStatus(200);

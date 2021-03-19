@@ -34,11 +34,8 @@ let userSchema = new Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'UserType'
   },
-  approved: {
-    type: Boolean,
-    default: false,
-  },
-}, {
+}, 
+{
     collection: 'users'
 });
 
