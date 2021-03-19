@@ -8,7 +8,6 @@ const ObjectID = require('mongodb').ObjectID;
 exports.create = (req, res) => {
    const approved = req.body.approved != null ? req.body.approved : false;
 
-  // const department = req.body.department._id
   const user_type = req.body.user_type._id
   const { title, first_name, last_name, email, password, department} = req.body;
   const user = new User({ title, first_name, last_name, email, password, department, user_type, approved });
@@ -29,7 +28,6 @@ exports.create = (req, res) => {
               last_name: user.last_name, 
               email: user.email, 
               department: user.department,
-              // department: req.body.department,
               user_type: req.body.user_type,
               approved: user.approved,
             }
@@ -41,7 +39,6 @@ exports.create = (req, res) => {
 };
 
 exports.get = (req, res) => {
-  //'department',
   User.find().populate([ 'user_type']).exec(function (err, data) {
     if (err) {
         res.status(500).send({
@@ -80,7 +77,6 @@ exports.update = (req, res) => {
   }
 
   let password = req.body.password === '' ? req.body.user.password : req.body.password;
-  // const department = req.body.department._id;
   const user_type = req.body.user_type._id;
   const approved = req.body.approved != null ? req.body.approved : false;
 
@@ -116,7 +112,6 @@ exports.update = (req, res) => {
                 last_name: last_name, 
                 email: email, 
                 department: department,
-                // department: req.body.department,
                 user_type: req.body.user_type,
                 approved: approved,
               }

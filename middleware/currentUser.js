@@ -19,7 +19,6 @@ const currentUser = function(req, res, next) {
                 res.status(401).send('Unauthorized: Invalid token');
             } else {
                 User.findOne({ 'email': decoded.user.email })
-                //'department',
                 .populate([ 'user_type']).exec(function(err, user) {
                     if (err) throw err;
                     req.user = user;
