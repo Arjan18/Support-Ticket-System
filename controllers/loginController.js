@@ -9,10 +9,10 @@ exports.login = (req, res) => {
     let Error = {};
     if (err) {
       Error.server = 'Internal error please try again';
-      res.json({Error}, 200); //500
+      res.json({Error}, 200);
     } else if (!user) {
       Error.email = 'This user does not exist';
-      res.json({Error}, 200); //401
+      res.json({Error}, 200);
     } else {
       user.isCorrectPassword(password, function(err, same) {
         if (err) {
@@ -21,7 +21,7 @@ exports.login = (req, res) => {
         } else if (!same) {
           Error.email = 'Incorrect email or password';
           Error.password = 'Incorrect email or password';
-          res.json({Error}, 200); //401
+          res.json({Error}, 200);
         } 
         else {
           // Session Issue token

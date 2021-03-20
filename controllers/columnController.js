@@ -2,12 +2,11 @@ const db = require('../models/column');
 const Column = db;
 
 exports.create = (req, res) => {
-
     if (!req.body.name) {
         res.status(400).send({ name: "Name cannot be empty!" });
         return;
     }
-
+    
     const { name } = req.body;
     const column = new Column({ name });
 
