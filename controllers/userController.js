@@ -27,7 +27,6 @@ exports.create = (req, res) => {
               email: user.email, 
               department: user.department,
               user_type: req.body.user_type,
-              
             }
           res.send(createdUser, 200);
         }
@@ -40,7 +39,7 @@ exports.get = (req, res) => {
   User.find().populate([ 'user_type']).exec(function (err, data) {
     if (err) {
         res.status(500).send({
-            message:err.message || "Some error occurred while retrieving Users."
+            message:err.message || "Error attempting to retrieve Users."
         });
     }
     res.send(data);
@@ -49,28 +48,28 @@ exports.get = (req, res) => {
 
 exports.update = (req, res) => {
   if (!req.body.title) {
-    res.status(200).send({ errors: [{ title: "Title cannot be empty!" }]});
+    res.status(200).send({ errors: [{ title: "Please fill in this field" }]});
     return;
   }
   if (!req.body.first_name) {
-    res.status(200).send({ errors: [{ first_name: "First name cannot be empty!" }]});
+    res.status(200).send({ errors: [{ first_name: "Please fill in this field" }]});
     return;
   }
   if (!req.body.last_name) {
-    res.status(200).send({ errors: [{ last_name: "Last name cannot be empty!" }]});
+    res.status(200).send({ errors: [{ last_name: "Please fill in this field" }]});
     return;
   }
   if (!req.body.email) {
-    res.status(200).send({ errors: [{ email: "Email cannot be empty!" }]});
+    res.status(200).send({ errors: [{ email: "Please fill in this field" }]});
     return;
   }
 
   if (!req.body.department) {
-    res.status(200).send({ errors: [{ department: "Department cannot be empty!" }]});
+    res.status(200).send({ errors: [{ department: "Please fill in this field" }]});
     return;
   }
   if (!req.body.user_type) {
-    res.status(200).send({ errors: [{ user_type: "Permisson type cannot be empty!" }]});
+    res.status(200).send({ errors: [{ user_type: "Please fill in this field" }]});
     return;
   }
 
@@ -98,7 +97,7 @@ exports.update = (req, res) => {
         },
         function(err, doc) {
           if (err) {
-              res.status(500).send("Error editting this user, try again.");
+              res.status(500).send("Unable to edit this user");
           } else {
               const updatedUser = 
               {
@@ -127,7 +126,7 @@ exports.delete = (req, res) => {
 
   User.deleteOne( { "_id" : userId }, function(err, user) {
     if (err) {
-        res.status(500).send("Error deleting this user, try again.");
+        res.status(500).send("Error deleting this user");
     } else {
         res.status(200).send(user);            
     }
@@ -139,16 +138,15 @@ exports.userTypes = (req, res) => {
     res.send(data);
   }).catch(err => {
     res.status(500).send({
-      message: err.message || "Some error occurred while retrieving User Types."
+      message: err.message || "Error occurred while retrieving User Types."
     });
   });
 };
 
 exports.currentUser = (req, res) => {
   let user = req.user.toObject();
-
-  let isAdmin = user.user_type.type === 'admin' ? true : false;
-  let isClient = user.user_type.type === 'client' ? true : false;
+  let isAdmin = user.user_type.type === 'Admin' ? true : false;
+  let isClient = user.user_type.type === 'Client User' ? true : false;
   let isSupport = user.user_type.type === 'support' ? true : false;
   user.isAdmin = isAdmin;
   user.isClient = isClient;

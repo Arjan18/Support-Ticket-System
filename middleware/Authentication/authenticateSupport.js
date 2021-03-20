@@ -12,11 +12,11 @@ const authenticateSupport = function(req, res, next) {
     ;
     
     if (!token) {
-        res.status(401).send('Unauthorized: No token provided');
+        res.status(401).send('No token provided');
     } else {
         jwt.verify(token, secret, function(err, decoded) {
             if (err) {
-                res.status(401).send('Unauthorized: Invalid token');
+                res.status(401).send('Invalid token');
             } else {
                 User.findOne({ 'email': decoded.user.email })
                 .populate(['user_type']).exec(function(err, user) {
@@ -26,7 +26,7 @@ const authenticateSupport = function(req, res, next) {
                         req.user = user;
                         next();
                     } else {
-                        res.status(401).send('Unauthorized: Invalid Permissions');
+                        res.status(401).send('Invalid Permissions');
                     }
                 });
             }

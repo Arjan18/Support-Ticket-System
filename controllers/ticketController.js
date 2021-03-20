@@ -11,17 +11,17 @@ exports.create = (req, res) => {
     const funct = jwt.verify(token, secret);
 
     if (!req.body.title) {
-        res.status(400).send({ title: "Title cannot be empty!" });
+        res.status(400).send({ title: "Please fill in this field" });
         return;
     }
   
     if (!req.body.info) {
-        res.status(400).send({ info: "The ticket description cannot be empty!" });
+        res.status(400).send({ info: "Please fill in this field" });
         return;
     }
 
     if (!req.body.raisedBy) {
-        res.status(400).send({ info: "The ticket has to be raised by someone!" });
+        res.status(400).send({ info: "Please fill in this field" });
         return;
     }
 
@@ -63,11 +63,11 @@ exports.create = (req, res) => {
 };
 
 exports.get = (req, res) => {
-    if (req.user.user_type.type === 'client') {
+    if (req.user.user_type.type === 'Client User') {
         Ticket.find({'raised_by': req.user._id}).populate(['created_by', 'allocated_to', 'raised_by', 'status']).exec(function (err, data) {
             if (err) {
                 res.status(500).send({
-                    message:err.message || "Some error occurred while retrieving Tickets."
+                    message:err.message || "Error occurred while retrieving Tickets."
                 });
             }
             res.send(data);
@@ -76,7 +76,7 @@ exports.get = (req, res) => {
         Ticket.find().populate(['created_by', 'allocated_to', 'raised_by', 'status']).exec(function (err, data) {
             if (err) {
                 res.status(500).send({
-                    message:err.message || "Some error occurred while retrieving Tickets."
+                    message:err.message || "Error occurred while retrieving Tickets."
                 });
             }
             res.send(data);
@@ -86,17 +86,17 @@ exports.get = (req, res) => {
 
 exports.update = (req, res) => {
     if (!req.body.title) {
-        res.status(400).send({ title: "Title cannot be empty!" });
+        res.status(400).send({ title: "Please fill in this field" });
         return;
     }
   
     if (!req.body.info) {
-        res.status(400).send({ info: "The ticket description cannot be empty!" });
+        res.status(400).send({ info: "Please fill in this field" });
         return;
     }
 
     if (!req.body.status) {
-        res.status(400).send({ info: "The ticket has to have a status!" });
+        res.status(400).send({ info: "Please fill in this field" });
         return;
     }
 
@@ -112,7 +112,7 @@ exports.update = (req, res) => {
         }, 
         function(err, doc) {
             if (err) {
-                res.status(500).send("Error editting your ticket, try again.");
+                res.status(500).send("Error editting your ticket");
             } else {
                 const updatedTicket = 
                 {

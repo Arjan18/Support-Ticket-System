@@ -26,6 +26,7 @@ app.use(cors({
 const db = require('./models');
 db.mongoose.connect(db.uri, {
     useNewUrlParser: true,
+    useCreateIndex: true,
     useUnifiedTopology: true
 }).then(() => {
     console.log('Connected to database');

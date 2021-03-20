@@ -8,19 +8,19 @@ exports.login = (req, res) => {
   User.findOne({ email }).select(['+email', '+password']).exec(function(err, user) {
     let Error = {};
     if (err) {
-      Error.server = 'Internal error please try again';
+      Error.server = 'Error please try again';
       res.json({Error}, 200);
     } else if (!user) {
-      Error.email = 'This user does not exist';
+      Error.email = 'User does not exist';
       res.json({Error}, 200);
     } else {
       user.isCorrectPassword(password, function(err, same) {
         if (err) {
-          Error.server = 'Internal error please try again';
+          Error.server = 'Error please try again';
           res.json({Error}, 500);
         } else if (!same) {
-          Error.email = 'Incorrect email or password';
-          Error.password = 'Incorrect email or password';
+          Error.email = 'Email or Password is incorrect';
+          Error.password = 'Email or Password is incorrect';
           res.json({Error}, 200);
         } 
         else {
