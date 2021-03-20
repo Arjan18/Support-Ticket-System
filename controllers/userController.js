@@ -147,7 +147,7 @@ exports.currentUser = (req, res) => {
   let user = req.user.toObject();
   let isAdmin = user.user_type.type === 'Admin' ? true : false;
   let isClient = user.user_type.type === 'Client User' ? true : false;
-  let isSupport = user.user_type.type === 'support' ? true : false;
+  let isSupport = user.user_type.type === 'Support Worker' ? true : false;
   user.isAdmin = isAdmin;
   user.isClient = isClient;
   user.isSupport = isSupport;

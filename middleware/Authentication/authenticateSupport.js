@@ -22,7 +22,7 @@ const authenticateSupport = function(req, res, next) {
                 .populate(['user_type']).exec(function(err, user) {
                     if (err) {
                         throw err;
-                    } else if (user.user_type.type === 'support') {
+                    } else if (user.user_type.type === 'Support Worker') {
                         req.user = user;
                         next();
                     } else {
