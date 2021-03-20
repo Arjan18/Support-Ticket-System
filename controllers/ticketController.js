@@ -63,25 +63,16 @@ exports.create = (req, res) => {
 };
 
 exports.get = (req, res) => {
-    if (req.user.user_type.type === 'Client User') {
-        Ticket.find({'raised_by': req.user._id}).populate(['created_by', 'allocated_to', 'raised_by', 'status']).exec(function (err, data) {
-            if (err) {
-                res.status(500).send({
-                    message:err.message || "Error occurred while retrieving Tickets."
-                });
-            }
-            res.send(data);
-        });
-    } else {
-        Ticket.find().populate(['created_by', 'allocated_to', 'raised_by', 'status']).exec(function (err, data) {
-            if (err) {
-                res.status(500).send({
-                    message:err.message || "Error occurred while retrieving Tickets."
-                });
-            }
-            res.send(data);
-        });
-    }
+
+    Ticket.find().populate(['created_by', 'allocated_to', 'raised_by', 'status']).exec(function (err, data) {
+        if (err) {
+            res.status(500).send({
+                message:err.message || "Error occurred while retrieving Tickets."
+            });
+        }
+        res.send(data);
+    });
+    
 };
 
 exports.update = (req, res) => {

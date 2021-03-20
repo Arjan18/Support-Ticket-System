@@ -8,6 +8,7 @@ const getStatuses = function(req, res, next) {
             next();
         } else {
             req.status = data;
+            
             next();
         }
     });
