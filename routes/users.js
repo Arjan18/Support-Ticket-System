@@ -7,7 +7,6 @@ const currentUser = require('../middleware/currentUser');
 //Authentication middleware
 const withAuth = require('../middleware/Authentication/withAuth');
 const authenticateAdmin = require('../middleware/Authentication/authenticateAdmin');
-const authenticateSupport = require('../middleware/Authentication/authenticateSupport');
 const authenticateUsers = require('../middleware/Authentication/authenticateUsers');
 
 //Validation middleware

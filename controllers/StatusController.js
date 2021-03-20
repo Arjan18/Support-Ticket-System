@@ -1,5 +1,5 @@
-const db = require('../models/column');
-const Column = db;
+const db = require('../models/status');
+const Status = db;
 
 exports.create = (req, res) => {
     if (!req.body.name) {
@@ -8,23 +8,23 @@ exports.create = (req, res) => {
     }
     
     const { name } = req.body;
-    const column = new Column({ name });
+    const Status = new Status({ name });
 
-    column.save(function(err) {
+    Status.save(function(err) {
         if (err) {
-            res.status(500).send("Error creating a column, try again.");
+            res.status(500).send("Error creating a Status, try again.");
         } else {
-            res.send(column, 200);
+            res.send(Status, 200);
         }
     });
 };
 
 exports.get = (req, res) => {
-    Column.find().then(data => {
+    Status.find().then(data => {
         res.send(data);
     }).catch(err => {
         res.status(500).send({
-            message: err.message || "Some error occurred while retrieving Columns."
+            message: err.message || "Some error occurred while retrieving Status."
         });
     });
 };

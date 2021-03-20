@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-let columnSchema = new Schema({
+let statusSchema = new Schema({
   name: {
     type: String,
     required: true,
@@ -13,7 +13,7 @@ let columnSchema = new Schema({
     required: true,
   },
 }, {
-    collection: 'columns'
+    collection: 'statuses'
 });
 
-module.exports = mongoose.model('Column', columnSchema)
+module.exports = mongoose.model('Status', statusSchema)

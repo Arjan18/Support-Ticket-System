@@ -1,4 +1,4 @@
-const db_status = require('../models/column');
+const db_status = require('../models/status');
 const Status = db_status;
 
 const getStatuses = function(req, res, next) {

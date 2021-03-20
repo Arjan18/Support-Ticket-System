@@ -23,7 +23,7 @@ let ticketSchema = new Schema({
   },
   status: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Column',
+    ref: 'Status',
     required: true,
   },
   created_by: {

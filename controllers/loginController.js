@@ -24,7 +24,7 @@ exports.login = (req, res) => {
           res.json({Error}, 200);
         } 
         else {
-          // Session Issue token
+          //Issue Session token
           const payload = { user };
           const token = jwt.sign(payload, secret, {
             expiresIn: '1h'

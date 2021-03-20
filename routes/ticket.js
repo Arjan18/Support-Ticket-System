@@ -10,16 +10,14 @@ const currentUser = require('../middleware/currentUser');
 
 //Access Ticket Controllers
 const TicketController = require('../controllers/ticketController');
-const ColumnController = require('../controllers/columnController');
+const StatusController = require('../controllers/StatusController');
 
 
 router.post('/create-ticket', [withAuth, getStatuses], TicketController.create);
 router.get('/get-tickets', currentUser, TicketController.get);
 router.post('/update-ticket', [withAuth, getStatuses], TicketController.update);
 
-
-router.post('/create-column', authenticateAdmin, ColumnController.create);
-router.get('/get-columns', withAuth, ColumnController.get);
+router.get('/get-status', withAuth, StatusController.get);
 
 
 module.exports = router;
