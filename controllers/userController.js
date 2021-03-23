@@ -73,15 +73,10 @@ exports.update = (req, res) => {
     return;
   }
 
-  // let password = req.body.password === '' ? req.body.user.password : req.body.password;
   const user_type = req.body.user_type._id;
 
   const { title, first_name, last_name, email, department } = req.body;
-  // bcrypt.genSalt(10, (err, salt) => {
-  //   bcrypt.hash(password, salt, (err, hash) => {
-  //     if (err) throw err;
-  //     let password = hash;
-  //     password = req.body.password === '' ? req.body.user.password : hash;
+
       User.findByIdAndUpdate(
         ObjectID(req.body.user._id), 
         {
@@ -90,7 +85,6 @@ exports.update = (req, res) => {
               first_name: first_name, 
               last_name: last_name, 
               email: email, 
-              // password: password,
               department: department,
               user_type: user_type,
             },
@@ -113,8 +107,6 @@ exports.update = (req, res) => {
           }
         }
       );
-    // });
-  // });
 };
 
 exports.delete = (req, res) => {

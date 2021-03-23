@@ -75,7 +75,8 @@ let userType = req.user.user_type.type;
         }
         if (userType === 'Client User') {
             let tickets = data.filter(ticket => String(ticket.raised_by._id) === String(req.user._id));
-            res.send(tickets);
+            // res.send(tickets);
+            data = tickets;
         }
         res.send(data);
     });

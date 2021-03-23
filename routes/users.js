@@ -31,5 +31,8 @@ router.get('/api/get-user-type', UserController.userTypes);
 router.get('/checkToken', withAuth, function(req, res) {
     res.sendStatus(200);
 });
+router.get('/checkAdmin', authenticateAdmin, function(req, res) {
+    res.sendStatus(200);
+});
 
 module.exports = router;
