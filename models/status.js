@@ -7,11 +7,6 @@ let statusSchema = new Schema({
     required: true,
     unique: true,
   },
-  created_at: {
-    type: Date,
-    default: Date.now,
-    required: true,
-  },
 }, {
     collection: 'statuses'
 });
