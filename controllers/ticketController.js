@@ -3,6 +3,8 @@ const Ticket = db;
 const jwt = require('jsonwebtoken');
 const ObjectID = require('mongodb').ObjectID;
 const user = require('../models/user');
+const { rawListeners } = require('../models/ticket');
+const ticket = require('../models/ticket');
 
 const secret = process.env.SECRET
 
@@ -64,15 +66,19 @@ exports.create = (req, res) => {
 
 exports.get = (req, res) => {
 
+let userType = req.user.user_type.type;
     Ticket.find().populate(['created_by', 'allocated_to', 'raised_by', 'status']).exec(function (err, data) {
         if (err) {
             res.status(500).send({
                 message:err.message || "Error occurred while retrieving Tickets."
             });
         }
+        if (userType === 'Client User') {
+            let tickets = data.filter(ticket => String(ticket.raised_by._id) === String(req.user._id));
+            res.send(tickets);
+        }
         res.send(data);
     });
-    
 };
 
 exports.update = (req, res) => {
